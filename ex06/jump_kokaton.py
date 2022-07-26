@@ -17,10 +17,18 @@ class Screen:
 #<C0A21022>
     #ゲームオーバー表示
     def game_over_screen(self, dif):
-        self.text("GameOver", 150, (255, 0, 0), (540, 350))
-        self.text("Press R KEY TO RESTART", 40, (0, 0, 0), (640, 650))
-        self.text("Press Esc KEY TO CLOSE", 40, (0, 0, 0), (640, 700))
-        self.text("SCORE: " + str(dif), 100, (64,155,63), (560, 500))
+        font = pg.font.Font(None, 150)
+        txt = font.render("GameOver", True, (255, 0, 0))
+        self.text(txt, (540, 350))
+        font = pg.font.Font(None, 40)
+        txt = font.render("Press R KEY TO RESTART", True, (0, 0, 0))
+        self.text(txt, (640, 650))
+        font = pg.font.Font(None, 40)
+        txt = font.render("Press Esc KEY TO CLOSE", True, (0, 0, 0))
+        self.text(txt, (640, 700))
+        font = pg.font.Font(None, 100)
+        text = font.render("SCORE: " + str(dif),True,(64,155,63))
+        self.text(text, (560, 500))
         pg.display.update()
 #</C0A21022>
 
@@ -30,9 +38,7 @@ class Screen:
         self.sfc.blit(self.bg_sfc, [self.bg_x, 0])
         self.bg_x = (self.bg_x - 5) % self.rect.width
 #<C0B21180>
-    def text(self,text, size, color: tuple, p: tuple):
-        font = pg.font.Font(None, size)
-        text = font.render(text, True, color)
+    def text(self,text, p: tuple):
         self.sfc.blit(text,[p[0], p[1]])
 #</C0B21180>
 
@@ -130,7 +136,9 @@ def main():
         end = time.time()
         dif = end - start 
         dif = math.floor(dif)
-        sc.text(str(dif), 100, (64,255,63), (10,5))
+        font = pg.font.Font(None,100)
+        text = font.render(str(dif),True,(64,255,63))
+        sc.text(text, (10,5))
 #</C0B21180>
 
         pg.display.update()
@@ -145,13 +153,13 @@ def collision(tori, obs, screen: Screen):
 #<C0A21060>
 #衝突後のリスタート等の処理
 def quit():
-    END_FLG=True
-    while END_FLG:
+    END_flg=True
+    while END_flg==True:
         for event in pg.event.get():
             if event.type == pg.QUIT or pg.key.get_pressed()[pg.K_ESCAPE]:
-                END_FLG = False
+                END_flg = False
             elif pg.key.get_pressed()[pg.K_r]:
-                END_FLG = False
+                END_flg = False
                 main()
     pg.quit()
     sys.exit()
