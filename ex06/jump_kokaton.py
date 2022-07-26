@@ -27,8 +27,8 @@ class Screen:
         txt = font.render("Press Esc KEY TO CLOSE", True, (0, 0, 0))
         self.text(txt, (640, 700))
         font = pg.font.Font(None, 100)
-        text = font.render("SCORE: " + str(dif),True,(64,155,63))
-        self.text(text, (560, 500))
+        txt = font.render("SCORE: " + str(dif),True,(64,155,63))
+        self.text(txt, (560, 500))
         pg.display.update()
 #</C0A21022>
 
@@ -38,8 +38,8 @@ class Screen:
         self.sfc.blit(self.bg_sfc, [self.bg_x, 0])
         self.bg_x = (self.bg_x - 5) % self.rect.width
 #<C0B21180>
-    def text(self,text, p: tuple):
-        self.sfc.blit(text,[p[0], p[1]])
+    def txt(self,txt, p: tuple):
+        self.sfc.blit(txt,[p[0], p[1]])
 #</C0B21180>
 
 
@@ -137,8 +137,8 @@ def main():
         dif = end - start 
         dif = math.floor(dif)
         font = pg.font.Font(None,100)
-        text = font.render(str(dif),True,(64,255,63))
-        sc.text(text, (10,5))
+        txt = font.render(str(dif),True,(64,255,63))
+        sc.text(txt, (10,5))
 #</C0B21180>
 
         pg.display.update()
@@ -153,13 +153,12 @@ def collision(tori, obs, screen: Screen):
 #<C0A21060>
 #衝突後のリスタート等の処理
 def quit():
-    END_flg=True
-    while END_flg==True:
+    while END_FLAG:
         for event in pg.event.get():
             if event.type == pg.QUIT or pg.key.get_pressed()[pg.K_ESCAPE]:
-                END_flg = False
+                END_FLAG = False
             elif pg.key.get_pressed()[pg.K_r]:
-                END_flg = False
+                END_FLAG = False
                 main()
     pg.quit()
     sys.exit()
